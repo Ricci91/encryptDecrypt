@@ -41,7 +41,7 @@ void encrypt(char text[], int shift) {
             char base = 'A';
             if (islower(text[i]))
             {
-                char base = 'a';
+                base = 'a';
             }
             text[i] = (text[i] - base + shift) %26 + base;
         } 
@@ -52,6 +52,7 @@ void encrypt(char text[], int shift) {
  * @brief Gets the length of a string
  * 
  * @param text The text string that should be measured
+ * @return An int that represents the number of chars in the string.
 */
 
 int stringlength(char text[]) {
