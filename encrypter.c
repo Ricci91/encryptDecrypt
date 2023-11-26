@@ -1,5 +1,16 @@
+/**
+ *      ENCRYPTER/DECRYPTER
+ * 
+ * A program that takes in text from the user and encrypts
+ * or decrypts the input data.
+ * 
+ * @author Richard Frøyland
+ * @file   encrypter.c
+*/
+
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 
 
@@ -8,10 +19,21 @@ void encrypt(char text[],int shift);
 int stringlength(char text[]);
 
 
-//Main Program
+/**
+ * @brief Main entry of the program
+ * 
+ * Demonstrates the encryption of a string when using Caesar cipher.
+ * 
+*/
 int main() {
-    char text[] = "Hello, world";
-    int shift = 1;
+    char text[1024];
+    printf("Enter the text you want to be encrypted: ");
+    gets(text);
+
+    int shift; 
+    printf("Enter the encryption number: ");
+    scanf("%d", &shift);
+    getchar();
 
     printf("Original text: %s.\n", text);
     encrypt(text, shift);
@@ -29,6 +51,10 @@ int main() {
  * @param text The text to encrypt
  * @param shift The number of positions to shift each character
  * 
+ * @example
+ * char myText[] = "abc";
+ * encrypt(myText, 2);
+ * // myText is now "cde"
 */
 
 void encrypt(char text[], int shift) {
@@ -49,14 +75,15 @@ void encrypt(char text[], int shift) {
 }
 
 /**
- * @brief Gets the length of a string
+ * @brief Gets the length of a string.
  * 
- * @param text The text string that should be measured
+ * @param text The text string that should be measured.
  * @return An int that represents the number of chars in the string.
 */
 
 int stringlength(char text[]) {
     int length = 0;
+    // Iterate over each character until the null-terminator is found
     while (text[length] != '\0') 
     {
         length++;
