@@ -15,9 +15,20 @@
 
 
 //Function prototypes
-void encrypt(char text[],int shift);
+void encrypt(char text[],struct EncryptionSettings *settings);
 int stringlength(char text[]);
 
+/**
+ * @struct EncryptionSettings
+ * @brief  Holds settings for encryption.
+ * 
+ * This struct is used to store the settings required for the encryption
+ * process.
+*/
+struct EncryptionSettings
+{
+    int shift; /**< The number of positions to shift in the cipher*/
+};
 
 /**
  * @brief Main entry of the program
@@ -26,17 +37,21 @@ int stringlength(char text[]);
  * 
 */
 int main() {
+    
+    struct EncryptionSettings mySettings;
+        mySettings.shift = 3;
+
     char text[1024];
     printf("Enter the text you want to be encrypted: ");
     gets(text);
 
     int shift; 
     printf("Enter the encryption number: ");
-    scanf("%d", &shift);
+    scanf("%d", &mySettings.shift);
     getchar();
 
     printf("Original text: %s.\n", text);
-    encrypt(text, shift);
+    encrypt(text, &mySettings); // Pass pointer to mySettings
     printf("Encrypted text: %s.\n", text);
 
     return 0;
@@ -57,20 +72,17 @@ int main() {
  * // myText is now "cde"
 */
 
-void encrypt(char text[], int shift) {
-    int length = stringlength(text);
+void encrypt(char text[], struct EncryptionSettings *settings) {
+    char *ptr = text; //Pointer to the first character of the text
 
-    for (int i = 0; i < length; i++)
+    while (*ptr != '\0')
     {
-        if (isalpha(text[i])) 
+        if (isalpha(*ptr)) 
         {
-            char base = 'A';
-            if (islower(text[i]))
-            {
-                base = 'a';
-            }
-            text[i] = (text[i] - base + shift) %26 + base;
-        } 
+            char base = islower(*ptr) ? 'a' : 'A';
+            *ptr = (*ptr - base + settings->shift) % 26 +base;
+        }
+        ptr++;
     }
 }
 
@@ -88,5 +100,4 @@ int stringlength(char text[]) {
     {
         length++;
     }
-    return length;
-}
+    return length; }
